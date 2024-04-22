@@ -1,6 +1,6 @@
-<x-template>
+<x-app.template>
 
-    <h1 class="text-center text-4xl py-14"> Index Budget Page </h1>
+    <h1 class="text-center text-4xl py-14"> Budget  </h1>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -16,6 +16,10 @@
 
                 <th scope="col" class="px-6 py-3">
                     Action
+                </th>
+
+                <th scope="col" class="px-6 py-3">
+                    Status
                 </th>
             </tr>
             </thead>
@@ -45,6 +49,25 @@
 
                     <a class="font-medium text-green-600 dark:text-green-500 hover:underline" href={{route('payCreate', $budget->id)}}> <button> Pay </button> </a>
                 </td>
+
+
+                <td class="px-6 py-4">
+                    @if($budget->remnant == $budget->total_value)
+                        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">Unpaid</span>
+                    @endif
+
+                    @if($budget->remnant == 0)
+                            <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">Paid out</span>
+                    @endif
+
+                    @if($budget->remnant > 0 && $budget->remnant < $budget->total_value)
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">Partially Paid out </span>
+                    @endif
+
+                </td>
+
+
+
             </tr>
 
         @endforeach
@@ -57,6 +80,6 @@
 
     <a class=" inline-block mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" href="{{route('budget.create')}}"> Store </a>
 
-    <a href="/" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Home</a>
+    <a href="{{route('dashboard')}}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Home</a>
 
-</x-template>
+</x-app.template>

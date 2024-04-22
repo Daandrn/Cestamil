@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\BudgetRequest;
 use App\Models\{Budget, Product};
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BudgetService
@@ -130,7 +131,51 @@ class BudgetService
         $budget->remnant = $budget->total_value - $budget->pay;
 
         return $budget->save();
-
     }
 
+    public function returnCountBudgetPaidOut(): int
+    {
+        $budgets = Budget::all();
+
+        $count = $budgets->filter(function ($item) {
+            return $item->pay == $item-> total_value;
+        });
+
+        return $count->count();
+    }
+
+
+    public function returnCountBudgetNotPaidOut(): int
+    {
+        $budgets = Budget::all();
+
+        $count = $budgets->filter(function ($item) {
+            return $item->remnant == $item-> total_value;
+        });
+
+        return $count->count();
+    }
+
+
+
+    public function returnCountBudgetPartiallyPaidOut(): int
+    {
+        $budgets = Budget::all();
+
+        $count = $budgets->filter(function ($item) {
+            if ($item->pay > 0 && $item->pay < $item->total_value) {
+                return $item;
+            };
+
+            return 0;
+        });
+
+        return $count->count();
+    }
+
+    public function lastBudgetDate()
+    {
+        return Carbon::parse(Budget::all()->sortByDesc('date')->first()->getAttribute('date'))->format('d-m-Y');
+    }
+    
 }
