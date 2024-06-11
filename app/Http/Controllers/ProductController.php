@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Models\{Budget, Product};
+use App\Models\Product;
 use App\Services\ProductService;
 
 class ProductController extends Controller
@@ -50,12 +50,14 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if (Budget::where('product', $product->id)->exists()) {
-            return redirect(route('product.index'));
-        }
-
         (new ProductService())->destroyProduct($product);
 
-        return redirect(route('product.index'));
+        $message = [
+            'success' => "Produto excluído com sucesso!"
+        ];
+
+        return redirect()
+                ->route('product.index')
+                ->withErrors($message);
     }
 }
