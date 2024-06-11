@@ -175,7 +175,12 @@ class BudgetService
 
     public function lastBudgetDate()
     {
-        return Carbon::parse(Budget::all()->sortByDesc('date')->first()->getAttribute('date'))->format('d-m-Y');
+        $budget = Budget::latest('date')->limit(1)->first('date');
+        
+        if ($budget) {
+            return Carbon::parse($budget->date)->format('d-m-Y');
+        }
+
+        return Carbon::parse('now')->format('d-m-Y');
     }
-    
 }
