@@ -1,16 +1,37 @@
 <?php
 
-use App\Http\Controllers\{BudgetController, DashboardController, ProductController, RegionController};
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use App\Http\Controllers\{BudgetController, DashboardController, ProductController, RegionController};
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', function () {
 
-Route::resource('region', RegionController::class);
+    if (Auth::check()) {
+        return redirect()->route('home');
+    }
+    
+    return Inertia::render('Auth/Login');
+});
 
-Route::resource('product', ProductController::class);
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('budget', BudgetController::class);
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
-Route::get('/budget/{budget}/pay', [BudgetController::class, 'payCreate'])->name('payCreate');
+    Route::resource('region', RegionController::class);
 
-Route::put('/budget/{budget}/pay', [BudgetController::class, 'payStore'])->name('payStore');
+    Route::resource('product', ProductController::class);
+
+    Route::resource('budget', BudgetController::class);
+    Route::get('/budget/{budget}/pay', [BudgetController::class, 'payCreate'])->name('payCreate');
+    Route::put('/budget/{budget}/pay', [BudgetController::class, 'payStore'])->name('payStore');
+    
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

@@ -4,7 +4,7 @@
 
     <div class="grid grid-cols-6 gap-2">
 
-    <a href="" class="block w-max col-start-1 col-span-2">
+    <a href="{{ Route('home') }}" class="block w-max col-start-1 col-span-2">
         <div class="p-2 px-4 h-[200px] w-[200px] bg-gray-200 rounded-lg dark:bg-gray-800 flex flex-col gap-6 relative">
             <h2 class="text-gray-50 text-center"> Fully-paid budgets </h2>
 
@@ -13,7 +13,7 @@
         </div>
     </a>
 
-    <a href="" class="block w-max col-start-3 col-span-2">
+    <a href="{{ Route('home') }}" class="block w-max col-start-3 col-span-2">
         <div class="p-2 px-4 h-[200px] w-[200px] bg-gray-200 rounded-lg dark:bg-gray-800 flex flex-col gap-6 relative">
             <h2 class="text-gray-50 text-center"> Partially Paid Budgets </h2>
 
@@ -22,7 +22,7 @@
         </div>
     </a>
 
-    <a href="" class="block w-max col-start-5 col-span-2">
+    <a href="{{ Route('home') }}" class="block w-max col-start-5 col-span-2">
         <div class="p-2 px-4 h-[200px] w-[200px] bg-gray-200 rounded-lg dark:bg-gray-800 flex flex-col gap-6 relative">
             <h2 class="text-gray-50 text-center"> Unpaid budgets </h2>
 
@@ -31,7 +31,7 @@
         </div>
     </a>
 
-        <a href="" class="block w-max col-start-5 col-span-2">
+        <a href="{{ Route('home') }}" class="block w-max col-start-5 col-span-2">
             <div class="p-2 px-4 h-[200px] w-[200px] bg-gray-200 rounded-lg dark:bg-gray-800 flex flex-col gap-6 relative">
                 <h2 class="text-gray-50 text-center"> Last budget </h2>
 
